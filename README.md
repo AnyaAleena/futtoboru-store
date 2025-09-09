@@ -14,7 +14,7 @@ Latihan 2
 
 
 - Buatlah bagan yang berisi request client ke web aplikasi berbasis Django beserta responnya dan jelaskan pada bagan tersebut kaitan antara urls.py, views.py, models.py, dan berkas html.
-![Bagan alur request-response Django](images/bagan.jpg)
+![Bagan alur request-response Django](bagan.jpg)
 
 
 - Jelaskan peran settings.py dalam proyek Django!
