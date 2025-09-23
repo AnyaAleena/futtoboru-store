@@ -1,37 +1,52 @@
-# Tugas 3
+# Tugas 4
 
-## Jelaskan mengapa kita memerlukan data delivery dalam pengimplementasian sebuah platform?
-Biar data dari backend bisa dipake di manapun, tidah hanya di web saja. Jadi frontend (web, mobile) atau bahkan service lain bisa konsumsi data yang sama dengan format yang jelas. Pada intinya, membuat aplikasi mudah diintegrasiin dan lebih fleksibel.
- 
-## Menurutmu, mana yang lebih baik antara XML dan JSON? Mengapa JSON lebih populer dibandingkan XML?
-Untuk kebutuhan aplikasi modern, JSON cenderung lebih unggul dibandingkan XML karena strukturnya lebih ringkas, mudah dibaca, dan sangat mudah diproses di berbagai bahasa pemrograman, terutama JavaScript. Sementara itu, XML masih relevan untuk sistem lama atau dokumen kompleks yang membutuhkan schema atau namespace. Namun secara umum, JSON lebih populer karena lebih efisien dan lebih praktis dipakai untuk web ataupun mobile.
+## Apa itu Django AuthenticationForm? Jelaskan juga kelebihan dan kekurangannya.
+AutheticationForm adalah form bawaan Django yang berfungsi untuk login user. Mencakup menyediakan field username & password, validasi username & password. Kalau valid, info user akan disimpan.
+Kelebihan: memudahkan karena siap dipakai, aman, dan tetap bisa dikustomisasi
+Kekurangan: fiturnya basic, misalnya pengecekan kekuatan password.
 
-## Jelaskan fungsi dari method is_valid() pada form Django dan mengapa kita membutuhkan method tersebut?
-is_valid() berfungsi untuk memvalidasi data yang dikirimkan melalui form. Jika data valid, Django akan menyediakan cleaned_data yang siap digunakan atau disimpan ke database. Jika tidak valid, error akan ditampilkan. Method ini penting untuk memastikan data yang masuk sesuai aturan dan mencegah data yang salah langsung tersimpan di database.
+##  Apa perbedaan antara autentikasi dan otorisasi? Bagaiamana Django mengimplementasikan kedua konsep tersebut?
+Autentikasi: cek user mana yang log in.
+Otoriasi: cek peran dari user tersebut.
+Di Django, autentikasi diurus lewat sistem login (pakai session + request.user), sementara otorisasi diurus lewat permission dan group. Jadi, Django melakukan autentikasi terlebih dahulu sebelum otorisasi.
 
-## Mengapa kita membutuhkan csrf_token saat membuat form di Django? Apa yang dapat terjadi jika kita tidak menambahkan csrf_token pada form Django? Bagaimana hal tersebut dapat dimanfaatkan oleh penyerang?
-csrf_token digunakan untuk mencegah serangan Cross-Site Request Forgery (CSRF). Tanpa token ini, penyerang dapat memanipulasi pengguna yang sedang login agar secara tidak sadar mengirimkan request berbahaya ke server, misalnya menambah, mengubah, atau menghapus data. Dengan adanya csrf_token, server dapat memverifikasi bahwa request POST benar-benar berasal dari form aplikasi sendiri, bukan dari pihak luar.
+##  Apa saja kelebihan dan kekurangan session dan cookies dalam konteks menyimpan state di aplikasi web?
+Session:
++ Tidak perlu login ulang setiap ganti halaman karena server menyimpan info user.
++ Data asli ada di server sehingga lebih aman daripada data ada di cookies.
+- Butuh storage di server
+- Session ID dapat dicuri orang dan akun user dapat dipakai.
 
-## Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial).
-1. Menambahkan 4 fungsi tersebut pada views.py
-2. Menambahkan 4 fungsi tersebut pada path di urls.py aplikasi
-3. Membuat fungsi pada views.py untuk penambahan produk dan penampilan detail produk.
-4. Menambahkan fungsi tersebut pada urls.py aplikasi
-5. Membuat template berupa html baru untuk penambahan produk dan penampilan detail produk.
+Cookies:
++ Data disimpan di browser, server hanya membaca.
++ Ringan untuk server.
+- Ukuran terbatas (4KB)
+- Mudah diintip sehingga bahaya untuk menyimpan data sensitif.
 
-## Apakah ada feedback untuk asdos di tutorial 2 yang sudah kalian kerjakan?
-Sudah baik.
+##  Apakah penggunaan cookies aman secara default dalam pengembangan web, atau apakah ada risiko potensial yang harus diwaspadai? Bagaimana Django menangani hal tersebut?
+Ada risiko potensial. Seperti cookie dicuri lewat serangan XSS, atau direbut jaringan kalau tidak memakai HTTPS, cookie juga bisa dimanfaatkan untuk serangan CSRF.
+Cara DJango menangani hal terseeut:
+- HttpOnly -> opsi supaya cookies tidak bisa diakses javascript (mencegah XSS)
+- Secure -> opsi supaya cookies hanya dikirim lewat HTTPS.
+- SameSite -> mencegah cookies dikirim lalu lintas sembarangan.
 
-## Hasil akses URL Postman
-### XML
-![Postman xml](/postman_screenshot/xml.png)
+##  Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial).
+Register, login, logout
+    - Membuat fungsi register, login, logout pada views.py dan routing ke urls.py
+    - Membuat RegisterView pakai UserCreationForm
+    - Pakai LoginView/LogoutView bawaan Django (hanya menyiapkan template)
 
-### JSON
-![Postman json](/postman_screenshot/json.png)
+Bikin 2 akun + 3 dummy data per akun
+    - Buat dua user
+    - Pada setiap user, buat 3 product baru
 
-### XML BY ID
-![Postman xml by id](/postman_screenshot/xml_by_id.png)
+Menghubungkan Product ke User
+    - Di models.py tepatnya di model Product, tambah kepemilikan setiap barang
+    - Migrate
 
-### JSON BY ID
-![Postman json by id](/postman_screenshot/json_by_id.png)
+Menampilkan user login info + last_login
+    - Saat login sukses, set cookie last login
+    - Tambahkan keterangan username dan last login pada main view
+
+
 
