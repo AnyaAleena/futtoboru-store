@@ -23,3 +23,9 @@ Flexbox -> satu dimensi (baris atau kolom). Cocok untuk navbar, toolbar, daftar 
 Grid -> dua dimensi (baris dan kolom). Cocok untuk galeri, catalog card.
 
 ##  Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial).
+- Kustomisasi halaman login, register, tambah product, edit product, dan detail product semenarik mungkin.
+-> Set color palette, tambahkan sebagai variable di css base.html
+
+-  Kustomisasi halaman daftar product menjadi lebih menarik dan responsive. 
+-> Menghubungkan main.html dengan card_product.html agar setiap product lebih rapih
+
