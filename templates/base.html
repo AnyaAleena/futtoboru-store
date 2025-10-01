@@ -2,9 +2,43 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {% block meta %}
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    {% block meta %} {% endblock meta %}
+     {% endblock meta %}
+    <script src="https://cdn.tailwindcss.com">    </script>
+    <link rel="stylesheet" href="{% static 'css/global.css' %}"/>
+
+    <style>
+  :root{
+    --c1:#D4BEBE; /* rose-taupe */
+    --c2:#E1DEE9;
+    --c3:#D5CFE1;
+    --c4:#B6A6CA;
+    --c5:#A09ABC;
+
+    /* derived accents */
+    --brand-50:#F3F1F7;
+    --brand-100:#ECEAF4;
+    --brand-200:#E5E0F1;
+    --brand-300:#DAD2EB;
+    --brand-400:#C9BDE2;
+    --brand-500:#B6A6CA; /* primary */
+    --brand-600:#A09ABC;
+    --brand-700:#8C86A8;
+    --brand-800:#756E90;
+    --brand-900:#5E5877;
+
+    --tone-100:#EFEDEE;
+    --tone-900:#3A3640;
+  }
+  .btn-primary{
+    background: var(--brand-600);
+    color: white;
+  }
+  .btn-primary:hover{ background: var(--brand-700); }
+  .chip{ background: var(--brand-100); color: var(--brand-900); }
+</style>
 </head>
 
 <body>

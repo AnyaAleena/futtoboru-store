@@ -1,60 +1,73 @@
 {% extends 'base.html' %}
- {% block content %}
- <h1>{{ nama_app }}</h1>
+{% load static %}
+{% block content %}
+{% include 'navbar.html' %}
 
-<h3>Nama: </h3>
-<p>{{ nama_mhs }}</p>
+<!-- Hero strip ungu lembut -->
+<div class="w-full"
+     style="background: linear-gradient(180deg, var(--brand-100), transparent);">
+  <div class="max-w-6xl mx-auto px-4 pt-6 pb-4">
+    <h1 class="text-2xl font-bold" style="color: var(--brand-900);">{{ nama_app }}</h1>
 
-<h3>NPM: </h3>
-<p>{{ npm }}</p>
+    <div class="mt-2 grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm"
+         style="color: var(--brand-800);">
+      <p><span class="font-medium">Nama:</span> {{ nama_mhs }}</p>
+      <p><span class="font-medium">NPM:</span> {{ npm }}</p>
+      <p><span class="font-medium">Kelas:</span> {{ kelas }}</p>
+    </div>
 
-<h3>Kelas: </h3>
-<p>{{ kelas }}</p>
+    <div class="mt-4 flex flex-wrap items-center gap-3">
 
-<a href="{% url 'main:create_product' %}">
-  <button>+ Add Product</button>
-</a>
 
-<a href="{% url 'main:logout' %}">
-  <button>Logout</button>
-</a>
-
-<h5>Sesi terakhir login: {{ last_login }}</h5>
-
-<a href="?filter=all">
-    <button type="button">All Articles</button>
-</a>
-<a href="?filter=my">
-    <button type="button">My Articles</button>
-</a> 
-
-<hr>
-
-{% if not product_list %}
-<p>Belum ada data produk pada product.</p>
-{% else %}
-
-{% for product in product_list %}
-<div>
-  <h2><a href="{% url 'main:show_product' product.id %}">{{ product.name }}</a></h2>
-
-  <p><b>{{ product.get_category_display }}</b>{% if product.is_featured %} | 
-    <b>Featured</b>{% endif %}{% if product.is_product_hot %} | 
-    <b>Hot</b>{% endif %} | <i>{{ product.created_at|date:"d M Y H:i" }}</i> 
-  </p>
-
-  {% if product.thumbnail %}
-  <img src="{{ product.thumbnail }}" alt="thumbnail" width="150" height="100">
-  <br />
-  {% endif %}
-
-  <p>{{ product.description|truncatewords:25 }}...</p>
-
-  <p><a href="{% url 'main:show_product' product.id %}"><button>Read More</button></a></p>
+    </div>
+    
+    <div class="mt-4 flex gap-2">
+      <a href="?filter=all"
+      class="inline-flex items-center rounded-md px-3 py-1.5 text-sm font-medium border hover:bg-white"
+      style="border-color: var(--brand-300); color: var(--brand-800);">
+      All Articles
+    </a>
+    <a href="?filter=my"
+    class="inline-flex items-center rounded-md px-3 py-1.5 text-sm font-medium border hover:bg-white"
+    style="border-color: var(--brand-300); color: var(--brand-800);">
+    My Articles
+  </a>
+  <span class="text-sm ml-auto" style="color: var(--brand-700);">
+    Sesi terakhir login: {{ last_login }}
+  </span>
+    </div>
+  </div>
 </div>
 
-<hr>
-{% endfor %}
+<hr class="border-t" style="border-color: var(--brand-200);" />
 
-{% endif %}
- {% endblock content %}
+<div class="max-w-6xl mx-auto px-4 py-6">
+  {% if not product_list %}
+    <div class="rounded-2xl border p-10 text-center bg-white"
+         style="border-color: var(--brand-200);">
+      <p class="text-gray-600">Belum ada data produk pada product.</p>
+      <a href="{% url 'main:create_product' %}"
+         class="mt-4 inline-flex items-center rounded-lg px-4 py-2 text-sm font-medium text-white"
+         style="background-color: var(--brand-600);">
+        Buat produk pertama
+      </a>
+    </div>
+  {% else %}
+    <!-- Section title subtle -->
+    <div class="mb-4 flex items-center gap-2">
+      <h2 class="text-lg font-semibold" style="color: var(--brand-900);">Products</h2>
+      <span class="text-xs px-2 py-0.5 rounded-full"
+            style="background-color: var(--brand-200); color: var(--brand-900);">
+        {{ product_list|length }}
+      </span>
+    </div>
+
+    <!-- Grid of cards (tetep pake include) -->
+    <section class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {% for product in product_list %}
+        {% include "card_product.html" with product=product %}
+      {% endfor %}
+    </section>
+  {% endif %}
+</div>
+{% endblock content %}

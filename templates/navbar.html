@@ -1,0 +1,33 @@
+<nav class="w-full border-b bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+  <div class="max-w-6xl mx-auto px-4 py-3 flex items-center gap-3">
+    <a href="{% url 'main:show_main' %}" class="text-lg font-extrabold tracking-tight"
+       style="color: var(--brand-900);">Futtoboru Store</a>
+
+    <div class="ml-6 hidden md:flex items-center gap-2">
+      <a href="{% url 'main:show_main' %}" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-100">Home</a>
+
+      <!-- Add Product: container abu + tanda + -->
+      <a href="{% url 'main:create_product' %}"
+         class="inline-flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-semibold"
+         style="background-color:#f3f4f6;">
+        <span class="inline-flex items-center justify-center w-5 h-5 rounded-md border border-gray-400">+</span>
+        Add Product
+      </a>
+
+
+    </div>
+
+    <div class="ml-auto flex items-center gap-2">
+      {% if user.is_authenticated %}
+        <span class="hidden sm:inline text-sm text-gray-600">Hi, {{ user.username }}</span>
+        <a href="{% url 'main:logout' %}" class="px-3 py-2 rounded-md text-sm font-medium border hover:bg-gray-50">
+          Logout
+        </a>
+      {% else %}
+        <a href="{% url 'main:login' %}" class="px-3 py-2 rounded-md text-sm font-medium border hover:bg-gray-50">Login</a>
+        <a href="{% url 'main:register' %}" class="px-3 py-2 rounded-md text-sm font-medium text-white"
+           style="background-color: var(--brand-600);">Register</a>
+      {% endif %}
+    </div>
+  </div>
+</nav>

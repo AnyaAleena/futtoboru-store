@@ -1,24 +1,74 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
+{% load static %}
 {% block content %}
-<p><a href="{% url 'main:show_main' %}"><button>← Back to Products List</button></a></p>
+{% include "navbar.html" %}
 
-<h1>{{ product.name }}</h1>
-<p><b>{{ product.get_category_display }}</b>{% if product.is_featured %} | 
-    <b>Featured</b>{% endif %}{% if product.is_product_hot %} | 
-    <b>Hot</b>{% endif %} | <i>{{ product.created_at|date:"d M Y, H:i" }}</i>
-</p> 
+<div class="max-w-5xl mx-auto px-4 py-8">
+  <!-- Title + meta -->
+  <h1 class="text-3xl font-bold" style="color: var(--brand-900);">{{ product.name }}</h1>
+  <p class="text-sm text-gray-500 mb-6">
+    {{ product.created_at|date:"M j, Y H:i" }} 
+  </p>
 
-{% if product.thumbnail %}
-<img src="{{ product.thumbnail }}" alt="Product thumbnail" width="300">
-<br /><br />
-{% endif %}
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <!-- Gambar: portrait -->
+    <div class="lg:col-span-1">
+      <div class="bg-white border rounded-2xl p-4">
+        <div class="w-full aspect-[3/4] bg-gray-100 rounded-xl overflow-hidden">
+          {% if product.thumbnail %}
+            <img src="{{ product.thumbnail }}" alt="{{ product.name }}" class="w-full h-full object-cover">
+          {% endif %}
+        </div>
+      </div>
+    </div>
 
-<p>{{ product.description }}</p>
+    <!-- Konten -->
+    <div class="lg:col-span-2">
+      <div class="bg-white border rounded-2xl p-6">
+        <!-- Info ringkas (ikut pola awal, cuma ditambah size/color/stock) -->
+        <ul class="space-y-2 text-sm text-gray-800 mb-6">
+          {% if product.get_category_display %}
+            <li><span class="font-medium">Category:</span> {{ product.get_category_display }}</li>
+          {% endif %}
 
-{% if product.user %}
-    <p>Author: {{ product.user.username }}</p>
-{% else %}
-    <p>Author: Anonymous</p>
-{% endif %}
+          {% if product.size %}
+            {# pakai label dari choices. kalau gak ada, fallback ke value aslinya #}
+            <li><span class="font-medium">Size:</span> {{ product.get_size_display|default:product.size }}</li>
+          {% endif %}
 
+          {% if product.color %}
+            {# hanya nama/label saja, sesuai permintaan #}
+            <li><span class="font-medium">Color:</span> {{ product.get_color_display|default:product.color }}</li>
+          {% endif %}
+
+          {% if product.stock is not None %}
+            <li><span class="font-medium">Stock:</span> {{ product.stock }}</li>
+          {% endif %}
+        </ul>
+
+        <!-- Deskripsi -->
+        <div class="prose max-w-none">
+          <p class="whitespace-pre-line text-gray-900">{{ product.content }}</p>
+        </div>
+
+        <!-- Actions (tetap sederhana, warna pakai palette) -->
+        <div class="mt-6 flex items-center gap-3">
+          <a href="{% url 'main:edit_product' product.pk %}"
+             class="inline-flex items-center px-4 py-2 rounded-lg text-sm font-medium border hover:bg-gray-50">
+            Edit
+          </a>
+          <a href="{% url 'main:delete_product' product.pk %}"
+             class="inline-flex items-center px-4 py-2 rounded-lg text-sm font-medium border text-red-600 hover:bg-red-50">
+            Delete
+          </a>
+          <a href="{% url 'main:show_main' %}"
+             class="ml-auto inline-flex items-center px-4 py-2 rounded-lg text-sm font-medium text-white"
+             style="background-color: var(--brand-600);">
+            Back to Home
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock content %}
