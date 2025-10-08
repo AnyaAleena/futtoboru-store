@@ -1,31 +1,20 @@
-# Tugas 5
+# Tugas 6
 
-## Jika terdapat beberapa CSS selector untuk suatu elemen HTML, jelaskan urutan prioritas pengambilan CSS selector tersebut!
-1. Inline Style (mis. <div style="...">)
-2. ID Selector (mis. #id)
-3. Class Selector (.class, [type=text], :hover, :focus)
-4. Element Selector (div, h1, ::before)
-5. Universal Selector (*)
+##  Apa perbedaan antara synchronous request dan asynchronous request?
+- **Synchronous request**: Proses akan berhenti menunggu respon dari server sebelum melanjutkan eksekusi kode lainnya.
+- **Asynchronous request**: Proses tidak akan menunggu respon dari server, sehingga kode lainnya bisa terus berjalan sembari menunggu respon dari server.
 
-##  Mengapa responsive design menjadi konsep yang penting dalam pengembangan aplikasi web? Berikan contoh aplikasi yang sudah dan belum menerapkan responsive design, serta jelaskan mengapa!
-Responsive design memastikan tampilan nyaman dipakai di berbagai ukuran layar (mobile → desktop), meningkatkan aksesibilitas, usability, dan SEO (Core Web Vitals & mobile-first indexing).
+## Bagaimana AJAX bekerja di Django (alur request–response)?
+Django menerima request AJAX melalui URL endpoint tertentu. Request tersebut akan diproses di backend (misalnya, dengan views yang menangani AJAX), kemudian Django mengirimkan respon ke frontend dalam bentuk JSON atau HTML yang kemudian digunakan untuk memperbarui tampilan tanpa reload halaman.
 
-Contoh sudah responsif: Google (pencarian & hasil menyesuaikan lebar layar).
-Contoh kurang responsif: beberapa situs lama/versi klasik seperti Craigslist—tata letak grid kaku sehingga di ponsel perlu zoom/scroll horizontal.
+## Apa keuntungan menggunakan AJAX dibandingkan render biasa di Django?
+- Mengurangi beban server dan waktu muat karena hanya bagian yang berubah yang diperbarui.
+- Pengalaman pengguna menjadi lebih interaktif dan cepat, tanpa perlu reload halaman penuh. 
 
-##  Jelaskan perbedaan antara margin, border, dan padding, serta cara untuk mengimplementasikan ketiga hal tersebut!
-- Margin: ruang di luar border (jarak antarelemen).
-- Border: garis pembatas di sekeliling elemen.
-- Padding: ruang di dalam border (jarak konten ke border).
+## Bagaimana cara memastikan keamanan saat menggunakan AJAX untuk fitur Login dan Register di Django?
+- Gunakan CSRF token untuk melindungi dari serangan Cross-Site Request Forgery (CSRF).
+- Pastikan data sensitif dienkripsi melalui HTTPS.
+- Gunakan validasi sisi server untuk setiap data yang dikirimkan melalui AJAX.
 
-##  Jelaskan konsep flex box dan grid layout beserta kegunaannya!
-Flexbox -> satu dimensi (baris atau kolom). Cocok untuk navbar, toolbar, daftar tombol.
-Grid -> dua dimensi (baris dan kolom). Cocok untuk galeri, catalog card.
-
-##  Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial).
-- Kustomisasi halaman login, register, tambah product, edit product, dan detail product semenarik mungkin.
--> Set color palette, tambahkan sebagai variable di css base.html
-
--  Kustomisasi halaman daftar product menjadi lebih menarik dan responsive. 
--> Menghubungkan main.html dengan card_product.html agar setiap product lebih rapih
-
+## Bagaimana AJAX mempengaruhi pengalaman pengguna (User Experience) pada website?
+AJAX meningkatkan interaktivitas dan kecepatan website karena tidak perlu reload halaman penuh, membuat pengguna merasa website lebih responsif.

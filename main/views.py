@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from main.forms import ProductForm
 from main.models import Product
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.core import serializers
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
@@ -62,8 +62,25 @@ def show_xml(request):
 
 def show_json(request):
     product_list = Product.objects.all()
-    json_data = serializers.serialize("json", product_list)
-    return HttpResponse(json_data, content_type="application/json")
+    data = [
+        {
+            'id': str(product.id),
+            'name': product.name,
+            'description': product.description,
+            'category': product.category,
+            'stock': product.stock,
+            'price': product.price,
+            'color': product.color,
+            'size': product.size,
+            'thumbnail': product.thumbnail,
+            'created_at': product.created_at.isoformat() if product.created_at else None,
+            'is_featured': product.is_featured,
+            'user_id': product.user_id,
+        }
+        for product in product_list
+    ]
+
+    return JsonResponse(data, safe=False)
 
 def show_xml_by_id(request, product_id):
     try:
